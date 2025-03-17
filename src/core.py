@@ -36,6 +36,27 @@ def get_weather(city="New York"):
     except Exception as e:
         return f"Error fetching weather: {e}"
 
+def get_news():
+    """ Fetch latest news headlines using News API """
+    api_key = config.get("news_api_key", "")
+    if not api_key:
+        return "News API key missing. Please set it in config.json."
+
+    url = f"https://newsapi.org/v2/top-headlines?country=us&apiKey={api_key}"
+    try:
+        response = requests.get(url)
+        data = response.json()
+
+        if data["status"] != "ok":
+            return f"Error: {data['message']}"
+
+        headlines = [f"{i+1}. {article['title']}" for i, article in enumerate(data["articles"][:5])]
+        return "Top News Headlines:\n" + "\n".join(headlines)
+
+    except Exception as e:
+        return f"Error fetching news: {e}"
+
+
 # Process user commands
 def process_command(command):
     """ Process user commands and call appropriate functions """
@@ -49,5 +70,8 @@ def process_command(command):
     # Handle API-powered responses
     if "weather" in command:
         return get_weather("New York") 
+
+    if "news" in command:
+        return get_news()
 
     return "I'm not sure how to respond to that."
