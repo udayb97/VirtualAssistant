@@ -1,2 +1,4 @@
 requests
 tk
+pyperclip
+Pillow

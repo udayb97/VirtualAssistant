@@ -1,7 +1,12 @@
 import tkinter as tk
+import os
+import webbrowser
+import pyperclip
+
 from tkinter import messagebox, ttk, scrolledtext
 from PIL import Image, ImageTk
-from src.core import process_command 
+from src.core import process_command
+
 
 class JarvisGUI:
     def __init__(self, root):
@@ -77,14 +82,59 @@ class JarvisGUI:
         self.display_output(response)
 
     def display_output(self, text):
+        self.output_text.config(state="normal")
         self.output_text.delete("1.0", tk.END)
-        self.output_text.insert(tk.END, text)
+
+        if text.startswith("Found:"):
+            paths = text.splitlines()[1:]
+            for path in paths:
+                self.output_text.insert(tk.END, path + "\n")
+
+            # Open Folder button
+            open_btn = tk.Button(
+                self.output_text,
+                text="Open Folder",
+                command=lambda p=path: self.open_folder(p),
+                font=("Helvetica", 9), bg="#00E5FF", fg="#0B162A", relief="flat", padx=5
+            )
+            self.output_text.window_create(tk.END, window=open_btn)
+
+            # Copy Path button
+            copy_btn = tk.Button(
+                self.output_text,
+                text="Copy Path",
+                command=lambda p=path: self.copy_to_clipboard(p),
+                font=("Helvetica", 9), bg="#007BFF", fg="white", relief="flat", padx=5
+            )
+            self.output_text.window_create(tk.END, window=copy_btn)
+
+            self.output_text.insert(tk.END, "\n\n")
+        else:
+            self.output_text.insert(tk.END, text)
+
+        self.output_text.config(state="disabled")
+
+
 
     def clear_input(self):
         self.command_var.set("Enter your request or select a command")
         self.output_text.delete("1.0", tk.END)
 
+    def open_folder(self, file_path):
+        import os 
+        import webbrowser
+        if os.path.exists(file_path):
+            folder = os.path.dirname(file_path)
+            webbrowser.open(f'file:///{folder}')
+        else:
+            print("Path not found or inaccessible.")
+
+    def copy_to_clipboard(self, text):
+        import pyperclip
+        pyperclip.copy(text)
+
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = JarvisGUI(root)
-    root.mainloop()
+        root = tk.Tk()
+        app = JarvisGUI(root)
+        root.mainloop()
+

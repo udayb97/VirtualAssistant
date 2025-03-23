@@ -55,6 +55,41 @@ def get_news():
 
     except Exception as e:
         return f"Error fetching news: {e}"
+    
+def set_reminder(text):
+    """ Save a reminder to a local file """
+    path = "src/data/reminders.txt"
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "a") as file:
+        file.write(text + "\n")
+    return f"Reminder saved: {text}"
+
+def get_reminders():
+    """ Retrieve saved reminders """
+    path = "src/data/reminders.txt"
+    if not os.path.exists(path):
+        return "No reminders set."
+
+    with open(path, "r") as file:
+        lines = file.readlines()
+
+    if not lines:
+        return "No reminders found."
+    return "Your Reminders:\n" + "".join(f"- {line}" for line in lines)
+
+def search_file(filename, search_path="C:/"):
+    """Search for a file with the given name across the system"""
+    matches = []
+    for root, dirs, files in os.walk(search_path):
+        if "$Recycle.Bin" in root:
+            continue  # skip system folder
+        if filename in files:
+            matches.append(os.path.join(root, filename))
+    
+    if matches:
+        return "Found:\n" + "\n".join(matches)
+    else:
+        return f"File '{filename}' not found in {search_path}"
 
 
 # Process user commands
@@ -73,5 +108,15 @@ def process_command(command):
 
     if "news" in command:
         return get_news()
+    
+    if command.startswith("reminder add"):
+        text = command.replace("reminder add", "").strip()
+        return set_reminder(text)
 
+    if command == "reminder view":
+        return get_reminders()
+    
+    if command.startswith("search file"):
+        filename = command.replace("search file", "").strip()
+        return search_file(filename)
     return "I'm not sure how to respond to that."
