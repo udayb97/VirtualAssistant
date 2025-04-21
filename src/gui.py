@@ -6,13 +6,14 @@ import pyperclip
 from tkinter import messagebox, ttk, scrolledtext
 from PIL import Image, ImageTk
 from src.core import process_command
+from src.helpers import listen, speak
 
-
+# GUI for J.A.R.V.I.S. (Just A Rather Very Intelligent System)
 class JarvisGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("J.A.R.V.I.S. - Your AI Assistant")
-        self.root.geometry("720x600")
+        self.root.geometry("850x550")
         self.root.resizable(False, False)
         self.root.configure(bg="#121212")
 
@@ -33,7 +34,7 @@ class JarvisGUI:
 
         # Dropdown for Quick Selection
         self.command_options = [
-            "weather New York", "news", "reminder add Buy groceries",
+            "weather New York", "news", "reminder add submit assignment",
             "reminder view", "search file document.txt"
         ]
         self.command_var = tk.StringVar(value="Enter your request or select a command")
@@ -41,7 +42,7 @@ class JarvisGUI:
             self.input_frame, textvariable=self.command_var,
             values=self.command_options, width=40, font=("Helvetica", 12)
         )
-        self.command_dropdown.grid(row=0, column=1, padx=5, pady=5)
+        self.command_dropdown.grid(row=0, column=1, padx=10, pady=5)
 
         def button_style(btn):
             btn.configure(
@@ -62,6 +63,21 @@ class JarvisGUI:
         self.clear_button = tk.Button(self.input_frame, text="Clear", command=self.clear_input)
         button_style(self.clear_button)
         self.clear_button.grid(row=0, column=3, padx=5, pady=5)
+
+        # Speak Button
+        self.speak_button = tk.Button(
+            self.input_frame,
+            text="🎤 Speak",
+            command=self.speak_input,
+            font=("Helvetica", 12, "bold"),
+            bg="#00E5FF",
+            fg="#0D1B2A",
+            relief="flat",
+            padx=10,
+            pady=5
+        )
+        self.speak_button.grid(row=0, column=4, padx=15, pady=5)
+    
 
         # Output Box
         self.output_label = tk.Label(root, text="Response:", font=("Helvetica", 14, "bold"), fg="#00E5FF", bg="#121212")
@@ -116,6 +132,14 @@ class JarvisGUI:
 
 
 
+    def speak_input(self):
+        voice_input = listen()
+        self.command_var.set(voice_input)
+        response = process_command(voice_input)
+        self.display_output(response)
+        speak(response)
+
+    
     def clear_input(self):
         self.command_var.set("Enter your request or select a command")
         self.output_text.delete("1.0", tk.END)

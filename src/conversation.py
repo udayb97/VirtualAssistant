@@ -42,7 +42,7 @@ def get_conversational_response(command):
         # Assistance Related
         "open google": "I can't open it directly, but you can type 'https://www.google.com' in your browser.",
         "what day is today": f"Today is {today_date}.",
-        "who created you": "I was created by my developer—you!",
+        "who created you": "I was created by my developer—Uday!",
         "why were you made": "I was built to assist, automate tasks, and make your life easier!",
         
         # Exit

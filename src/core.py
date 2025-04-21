@@ -2,6 +2,8 @@ import requests
 import json
 import os
 from src.conversation import get_conversational_response 
+from gpt4all import GPT4All
+
 
 # Load configuration settings (e.g., API keys)
 CONFIG_FILE = "src/data/config.json"
@@ -90,33 +92,72 @@ def search_file(filename, search_path="C:/"):
         return "Found:\n" + "\n".join(matches)
     else:
         return f"File '{filename}' not found in {search_path}"
+    
+def get_ai_response(prompt):
+    """Generate a smart response using a local GPT4All model and clean it up."""
+    model_path = r"C:\Users\udayb\AppData\Local\nomic.ai\GPT4All\Phi-3-mini-4k-instruct.Q4_0.gguf"
+    model = GPT4All(model_path, device="cpu")
+
+    with model:
+        response = model.generate(prompt, max_tokens=150).strip()
+
+        # --- Clean up the output ---
+        # Remove common model artifacts and user echo
+        for sep in ["<|endoftext|>", "<endoftext>", "User:", "\nUser:", "[user]", "[instruction]", "###"]:
+            if sep in response:
+                response = response.split(sep)[0].strip()
+
+        # Handle '[answer]:' formatting
+        if '[answer]:' in response:
+            response = response.split('[answer]:')[-1].strip()
+
+        # Remove surrounding quotes if present
+        if response.startswith('"') and response.endswith('"'):
+            response = response[1:-1].strip()
+    return response
 
 
-# Process user commands
+
+#process user commands
 def process_command(command):
-    """ Process user commands and call appropriate functions """
+    """Process user commands and call appropriate functions"""
     command = command.lower().strip()
 
-    # Check if it's a conversational command
+    # 1. Check for predefined conversational responses
     response = get_conversational_response(command)
     if response:
-        return response 
+        return response
 
-    # Handle API-powered responses
+    # 2. Handle known command patterns
     if "weather" in command:
-        return get_weather("New York") 
+        words = command.split()
+        city = "New York"  # default fallback
+
+        # Try to extract city from the input like "weather London" or "weather in Paris"
+        if "in" in words:
+            idx = words.index("in")
+            if idx + 1 < len(words):
+                city = " ".join(words[idx + 1:])
+        elif len(words) > 1:
+            city = " ".join(words[1:])  # e.g., "weather London"
+        return get_weather(city)
 
     if "news" in command:
         return get_news()
-    
+
     if command.startswith("reminder add"):
         text = command.replace("reminder add", "").strip()
         return set_reminder(text)
 
     if command == "reminder view":
         return get_reminders()
-    
+
     if command.startswith("search file"):
         filename = command.replace("search file", "").strip()
         return search_file(filename)
-    return "I'm not sure how to respond to that."
+
+    # 3. Fallback: Let GPT4All try to answer
+    ai_response = get_ai_response(command)
+    if not ai_response.strip():  # Optional safety if model returns blank
+        return "I'm not sure how to respond to that right now."
+    return ai_response
