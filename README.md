@@ -20,7 +20,7 @@ The purpose of this project is to demonstrate the integration of Python programm
 - **Webbrowser** – For opening folders from search results
 
 ## 📁 Folder Structure
-'''
+```
 VirtualAssistant/ 
 │   ├── assets/ # logo and animations 
 │   │   └──jarvis_logo.png
@@ -34,4 +34,4 @@ VirtualAssistant/
 │   │       ├── reminders.txt       
 │   ├── README.md
 │   ├── requirements.txt 
-'''
+```
