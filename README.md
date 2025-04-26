@@ -7,9 +7,9 @@ J.A.R.V.I.S. is a Python-based AI virtual assistant designed to simplify everyda
 The purpose of this project is to demonstrate the integration of Python programming concepts with APIs, file I/O, and GUI development to create an intelligent desktop assistant.
 
 ## Value
-- Saves time by automating common daily tasks.
-- Enhances productivity through a clean and interactive interface.
-- Demonstrates advanced Python skills including system integration, modular design, and GUI handling.
+- Saves time by automating common daily tasks.  
+- Enhances productivity through a clean and interactive interface.  
+- Demonstrates advanced Python skills including system integration, modular design, and GUI handling.  
 
 ## APIs Used
 - **OpenWeatherMap API** – For real-time weather updates
@@ -18,20 +18,20 @@ The purpose of this project is to demonstrate the integration of Python programm
 > API keys need to be inserted in `src/data/config.json` for these services to work.
 
 ## AI Features
-- GPT4All integration with the **Phi-3 Mini Instruct** model
-- Smart fallback to AI for unknown queries
-- Voice-driven interaction pipeline using speech recognition
+- GPT4All integration with the **Phi-3 Mini Instruct** model  
+- Smart fallback to AI for unknown queries  
+- Voice-driven interaction pipeline using speech recognition  
 
 ## Technologies Used
 - **Python 3.13**
-- **Tkinter** – For building the GUI
-- **Requests** – For making API calls (e.g., weather, news)
-- **Pillow** – For handling images (logo, GIF)
-- **Pyperclip** – For clipboard access (copy file paths)
-- **Webbrowser** – For opening folders from search results
-- **SpeechRecognition** – For converting speech to text
-- **pyttsx3** – For text-to-speech response
-- **GPT4All** – For AI-based query responses (offline)
+- **Tkinter** – For building the GUI  
+- **Requests** – For making API calls (e.g., weather, news)  
+- **Pillow** – For handling images (logo, GIF)  
+- **Pyperclip** – For clipboard access (copy file paths)  
+- **Webbrowser** – For opening folders from search results  
+- **SpeechRecognition** – For converting speech to text  
+- **pyttsx3** – For text-to-speech response  
+- **GPT4All** – For AI-based query responses (offline)  
 
 ## 1. Clone the Repository
 ```
@@ -66,10 +66,10 @@ pip install SpeechRecognition pyttsx3 pyaudio
 ## Note: Make sure to double check all the libraries are installed.
 
 ## 5. Configure API Keys
--Open src/data/config.json
--Insert your valid API keys for:
---OpenWeatherMap
---NewsAPI
+-Open src/data/config.json  
+-Insert your valid API keys for:  
+--OpenWeatherMap  
+--NewsAPI  
 
 ## 6. Download and Set Up GPT4All Model (Offline AI)
 - Download the model: Phi-3-mini-4k-instruct.Q4_0.gguf
@@ -87,12 +87,12 @@ model_path = r"C:\Users\YourUsername\.cache\gpt4all\Phi-3-mini-4k-instruct.Q4_0.
 python -m src.gui
 ```
 
-## 8. How to interact with J.A.R.V.I.S.
--Type a question or command in the text box
--Click Ask to get a response
--Click Clear to reset the input and output
--Click Speak to give a voice command
--J.A.R.V.I.S. will also speak the response back using text-to-speech
+## 8. How to interact with J.A.R.V.I.S.  
+-Type a question or command in the text box  
+-Click Ask to get a response  
+-Click Clear to reset the input and output  
+-Click Speak to give a voice command  
+-J.A.R.V.I.S. will also speak the response back using text-to-speech  
 
 ## Folder Structure
 ```
