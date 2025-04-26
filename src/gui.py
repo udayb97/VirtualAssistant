@@ -34,10 +34,10 @@ class JarvisGUI:
 
         # Dropdown for Quick Selection
         self.command_options = [
-            "weather New York", "news", "reminder add submit assignment",
-            "reminder view", "search file document.txt"
+            "weather New York", "news", "reminder add submit Project Video",
+            "view reminders", "search file document.txt"
         ]
-        self.command_var = tk.StringVar(value="Enter your request or select a command")
+        self.command_var = tk.StringVar(value="Enter, Select or Speak a Command")
         self.command_dropdown = ttk.Combobox(
             self.input_frame, textvariable=self.command_var,
             values=self.command_options, width=40, font=("Helvetica", 12)

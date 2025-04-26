@@ -2,3 +2,7 @@ requests
 tk
 pyperclip
 Pillow
+SpeechRecognition
+pyttsx3
+pyaudio
+gpt4all
