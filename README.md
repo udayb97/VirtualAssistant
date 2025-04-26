@@ -1,11 +1,14 @@
 # J.A.R.V.I.S. – Your Personal Virtual Assistant 🤖
 
 ## Description
+## Description
 J.A.R.V.I.S. is a Python-based AI virtual assistant designed to simplify everyday tasks such as setting reminders, checking the weather, fetching news, searching for files, and answering basic conversational queries.
 
 ## Purpose
+## Purpose
 The purpose of this project is to demonstrate the integration of Python programming concepts with APIs, file I/O, and GUI development to create an intelligent desktop assistant.
 
+## Value
 ## Value
 - Saves time by automating common daily tasks.
 - Enhances productivity through a clean and interactive interface.
@@ -95,12 +98,80 @@ python -m src.gui
 
 ## Folder Structure
 ```
+- **SpeechRecognition** – For converting speech to text
+- **pyttsx3** – For text-to-speech response
+- **GPT4All** – For AI-based query responses (offline)
+
+## 1. Clone the Repository
+```
+git clone https://github.com/udayb97/VirtualAssistant.git
+cd Virtual Assistant
+```
+## 2. Create and Activate a Virtual Environment
+```
+python -m venv .venv
+```
+-Windows:
+```
+.venv\Scripts\activate
+```
+-macOS/Linux:
+```
+source .venv/bin/activate
+```
+
+## 3. Install Required Dependencies
+```
+pip install -r requirements.txt
+```
+### This will install essential packages like:
+
+-tkinter, requests, pyttsx3, Pillow, pyperclip, SpeechRecognition, pyaudio, gpt4all
+
+## 4. Install Additional Voice Libraries
+```
+pip install SpeechRecognition pyttsx3 pyaudio 
+```
+## Note: Make sure to double check all the libraries are installed.
+
+## 5. Configure API Keys
+-Open src/data/config.json
+-Insert your valid API keys for:
+--OpenWeatherMap
+--NewsAPI
+
+## 6. Download and Set Up GPT4All Model (Offline AI)
+- Download the model: Phi-3-mini-4k-instruct.Q4_0.gguf
+```
+C:\Users\YourUsername\.cache\gpt4all\
+```
+## Note - You can get it from the GPT4All desktop app or official model repository.
+## Note - Confirm that core.py is pointing to the correct model path
+```
+model_path = r"C:\Users\YourUsername\.cache\gpt4all\Phi-3-mini-4k-instruct.Q4_0.gguf"
+```
+## 7. Run the Application
+```
+python -m src.gui
+```
+
+## 8. How to interact with J.A.R.V.I.S.
+-Type a question or command in the text box
+-Click Ask to get a response
+-Click Clear to reset the input and output
+-Click Speak to give a voice command
+-J.A.R.V.I.S. will also speak the response back using text-to-speech
+
+## Folder Structure
+```
 VirtualAssistant/ 
 │   ├── assets/ # logo and animations 
 │   │   └──jarvis_logo.png
 │   ├── screenshots/ # app screenshots for milestone 
 │   ├── src/ 
 │   │   ├── gui.py # main GUI file 
+│   │   ├── core.py # assistant command logic
+│   │   ├── helpers.py # Voice input and output
 │   │   ├── core.py # assistant command logic
 │   │   ├── helpers.py # Voice input and output
 │   │   ├── conversation.py # predefined responses 
