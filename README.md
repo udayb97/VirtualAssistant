@@ -36,7 +36,7 @@ The purpose of this project is to demonstrate the integration of Python programm
 ## 1. Clone the Repository
 ```
 git clone https://github.com/udayb97/VirtualAssistant.git
-cd Virtual Assistant
+cd VirtualAssistant
 ```
 ## 2. Create and Activate a Virtual Environment
 ```
