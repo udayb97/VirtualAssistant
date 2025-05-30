@@ -148,6 +148,5 @@ Click the **Speak** button to give voice commands!
 
 Enjoy using J.A.R.V.I.S.! 🤖🎙️✨
 
-▶️ [Watch the video](https://youtu.be/NboKlnW6RAE)
 
 
